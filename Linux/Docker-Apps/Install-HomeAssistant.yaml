@@ -1,0 +1,40 @@
+---
+- name: Deploy Home Assistant with Docker
+  hosts: all
+  become: true
+
+  vars:
+    ha_config_dir: /opt/homeassistant
+    ha_container_name: homeassistant
+    ha_image: "ghcr.io/home-assistant/home-assistant:stable"
+    timezone: "America/New_York"  # Change to your actual timezone
+
+  pre_tasks:
+    # Create configuration directory
+    - name: Create Home Assistant config directory
+      file:
+        path: "{{ ha_config_dir }}"
+        state: directory
+        mode: '0755'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+  tasks:
+    # Run Home Assistant container with Docker
+    - name: Run Home Assistant container
+      community.docker.docker_container:
+        name: "{{ ha_container_name }}"
+        image: "{{ ha_image }}"
+        restart_policy: always
+        network_mode: host
+        privileged: true
+        volumes:
+          - "{{ ha_config_dir }}:/config"
+          - "/etc/localtime:/etc/localtime:ro"
+        env:
+          TZ: "{{ timezone }}"
+
+  post_tasks:
+    - name: Show success message
+      debug:
+        msg: "✅ Home Assistant deployed successfully and should be available on port 8123!"

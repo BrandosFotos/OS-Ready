@@ -1,0 +1,111 @@
+---
+- name: Setup Linux (Docker + Docker Compose)
+  hosts: all
+  become: true
+
+  vars:
+    docker_packages:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    docker_compose_version: "v2.24.6"
+
+  pre_tasks:
+    # Ensure APT keyring directory exists
+    - name: Create /etc/apt/keyrings
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    # Remove any old Docker GPG key
+    - name: Remove old Docker key (.asc)
+      file:
+        path: /etc/apt/keyrings/docker.asc
+        state: absent
+
+    # Fetch system architecture and OS for Compose download
+    - name: Get OS and architecture
+      shell: uname -s && uname -m
+      register: system_info
+
+    - name: Set Compose facts
+      set_fact:
+        docker_os: "{{ system_info.stdout_lines[0] | lower }}"
+        docker_arch: "{{ system_info.stdout_lines[1] }}"
+
+  tasks:
+    # Add Docker GPG key
+    - name: Download Docker GPG key
+      get_url:
+        url: https://download.docker.com/linux/debian/gpg
+        dest: /etc/apt/keyrings/docker.gpg
+        mode: '0644'
+
+    # Add Docker repo using secure signed-by method
+    - name: Configure Docker APT repo
+      copy:
+        dest: /etc/apt/sources.list.d/docker.list
+        content: |
+          deb [arch=arm64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable
+        mode: '0644'
+
+    # Update APT cache
+    - name: Update APT index
+      apt:
+        update_cache: yes
+
+    # Install required dependencies
+    - name: Install prerequisite packages
+      apt:
+        name: "{{ docker_packages }}"
+        state: present
+
+    # Install Docker via official convenience script
+    - name: Install Docker (get.docker.com)
+      shell: |
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sh get-docker.sh
+      args:
+        creates: /usr/bin/docker
+
+    # Start Docker and enable it at boot
+    - name: Enable and start Docker service
+      systemd:
+        name: docker
+        enabled: true
+        state: started
+
+    # Add current user to docker group
+    - name: Add user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    # Install Docker Compose as standalone binary
+    - name: Download Docker Compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ docker_os }}-{{ docker_arch }}"
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+  post_tasks:
+    # Optional: show Docker and Compose versions
+    - name: Verify Docker version
+      command: docker --version
+      register: docker_version_output
+      changed_when: false
+
+    - name: Verify Docker Compose version
+      command: docker-compose --version
+      register: docker_compose_version_output
+      changed_when: false
+
+    - name: Print success message
+      debug:
+        msg: >
+          ✅ Docker and Docker Compose installed successfully:
+          {{ docker_version_output.stdout }},
+          {{ docker_compose_version_output.stdout }}

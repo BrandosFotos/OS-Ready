@@ -1,0 +1,51 @@
+---
+- name: Install OpenSprinkler Firmware on Raspberry Pi
+  hosts: all
+  become: true
+
+  vars:
+    repo_url: https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git
+    install_dir: /opt/opensprinkler
+
+  tasks:
+    - name: Ensure dependencies are installed
+      apt:
+        name:
+          - git
+          - build-essential
+          - wiringpi
+          - libc6-dev
+        update_cache: true
+
+    - name: Clone OpenSprinkler firmware repo
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ install_dir }}"
+        version: master
+        force: yes
+
+    - name: Compile the firmware
+      make:
+        chdir: "{{ install_dir }}"
+
+    - name: Create systemd service file
+      copy:
+        dest: /etc/systemd/system/opensprinkler.service
+        content: |
+          [Unit]
+          Description=OpenSprinkler Firmware
+          After=network.target
+
+          [Service]
+          ExecStart={{ install_dir }}/OpenSprinkler
+          Restart=always
+          User=root
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Enable and start OpenSprinkler service
+      systemd:
+        name: opensprinkler
+        enabled: yes
+        state: started
