@@ -14,9 +14,9 @@ choco install googlechrome -y
 choco install 7zip -y
 choco install firefox -y
 choco install bambustudio -y
-choco uninstall geforce-game-ready-driver -y
 choco install microsoft-teams.install -y
 choco install epicgameslauncher -y
 choco install discord -y
 choco install steam -y
-choco install geforce-experience -y
+choco install nvidia-app -y
+choco install winscp -y
