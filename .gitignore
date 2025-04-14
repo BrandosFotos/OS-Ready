@@ -3,6 +3,6 @@ inventory.ini
 .env
 .vscode
 /Linux/install_meshcentral.yaml
-OS-Ready.cpp
 OS-Ready
 OS-Ready.exe
+.DS_Store
