@@ -2,7 +2,7 @@
 
 ## Overview
 
-**OS-Ready** is a lightweight command-line utility designed to automate fresh installations and system configuration across **Windows**, **macOS**, and **Linux** using **Ansible**. It streamlines the setup process for developers, sysadmins, and power users—handling SSH setup, Ansible installation, inventory management, and execution of tailored playbooks.
+**OS-Ready** is a lightweight command-line utility designed to automate fresh installations and system configuration across **Windows**, **macOS**, and **Linux** using **Ansible**. It streamlines the setup process for developers, sysadmins, and power users—handling SSH setup, Ansible installastion, inventory management, and execution of tailored playbooks.
 
 ## ✨ Features
 
