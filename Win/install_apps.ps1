@@ -20,3 +20,5 @@ choco install discord -y
 choco install steam -y
 choco install nvidia-app -y
 choco install winscp -y
+choco install openoffice -y
+choco install microsoft-office-deployment -y
