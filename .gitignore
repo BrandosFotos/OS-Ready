@@ -4,7 +4,9 @@ inventory.ini
 .vscode
 /Linux/install_meshcentral.yaml
 /Win/Activate.ps1
-OS-Ready.cpp
+/src/setup.cpp
+/src/Backup.cpp
 OS-Ready
 OS-Ready.exe
 .DS_Store
+/Ansible

@@ -46,7 +46,7 @@ int main() {
             cout << "------------------------[ LOCAL " << platform << "]------------------------\n\n";
             cout << "Available playbooks:\n";
 
-            string path = platform; // Change this to your actual directory
+            string path = "../" + platform; // Change this to your actual directory
 
 
             int j = 0;
