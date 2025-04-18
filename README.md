@@ -29,7 +29,42 @@ Planned system automation scripts will include:
 
 ### Installation & Usage
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourrepo/OS-Ready.git
-   cd OS-Ready
+<details>
+<summary><strong>Mac & Linux</strong></summary>
+
+# Clone the repo
+```bash
+# Clones the repo and enters the directory
+git clone https://github.com/BrandosFotos/OS-Ready.git
+cd OS-Ready
+```
+
+# Run the build script
+```bash
+# Builds the program from source with cmake
+chmod +x build.sh
+./build.sh
+```
+</details>
+
+
+<details>
+<summary><strong>Windows (via MinGW)</strong></summary>
+
+# Clone the repo using Git Bash or WSL
+```bash
+# Clones the repo and enters the directory
+git clone https://github.com/BrandosFotos/OS-Ready.git
+cd OS-Ready
+```
+
+ Ensure MinGW and required toolchain are installed
+ (e.g. x86_64-w64-mingw32-gcc and g++ in PATH)
+
+# Run the build script
+```bash
+# Builds the program from source with cmake
+chmod +x build.sh
+./build.sh
+```
+</details>

@@ -10,3 +10,7 @@ OS-Ready
 OS-Ready.exe
 .DS_Store
 /Ansible
+CMakeLists.txt
+/build
+/build-windows
+cleanbuild.sh

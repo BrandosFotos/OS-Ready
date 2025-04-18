@@ -11,6 +11,7 @@ using namespace std;
 void clearscreen();
 void getPlatformSpecificPaths(string& platform, string& username, string& SCP);
 int runProgram(int selection, string platform, string filenames[]);
+void writeAllEmbeddedFiles();
 
 int main() {
     string platform;
@@ -46,7 +47,7 @@ int main() {
             cout << "------------------------[ LOCAL " << platform << "]------------------------\n\n";
             cout << "Available playbooks:\n";
 
-            string path = "../" + platform; // Change this to your actual directory
+            string path = "./" + platform; // Change this to your actual directory
 
 
             int j = 0;
@@ -90,11 +91,9 @@ int main() {
 
     return 0;
 }
-
 void clearscreen() {
     std::cout << "\033[2J\033[H"; // Clears screen and moves cursor to top-left
 }
-
 void getPlatformSpecificPaths(string& platform, string& username,string& SCP) {
 
     
@@ -114,8 +113,6 @@ void getPlatformSpecificPaths(string& platform, string& username,string& SCP) {
     SCP = "scp";
     #endif
 }
-
-
 int runProgram(int selection, string platform, string filenames[]) {
     clearscreen();
     string command;
