@@ -3,7 +3,6 @@ inventory.ini
 .env
 .vscode
 /Linux/install_meshcentral.yaml
-/Win/Activate.ps1
 /src/setup.cpp
 /src/Backup.cpp
 OS-Ready

@@ -62,9 +62,14 @@ cd OS-Ready
  (e.g. x86_64-w64-mingw32-gcc and g++ in PATH)
 
 # Run the build script
+
 ```bash
 # Builds the program from source with cmake
 chmod +x build.sh
 ./build.sh
 ```
 </details>
+
+
+### Credits
+Credit for the windows install script goes to the folks at [Massgrave.dev](https://massgrave.dev/)
