@@ -23,3 +23,4 @@ choco install winscp -y
 choco install openoffice -y
 choco install microsoft-office-deployment -y
 choco install mingw -y
+choco install imageglass -y

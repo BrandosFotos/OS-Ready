@@ -8,7 +8,7 @@ namespace fs = std::filesystem;
 using namespace std;
 
 // Function declarations
-void clearscreen();
+void clearscreen(string platform);
 void getPlatformSpecificPaths(string& platform, string& username, string& SCP);
 int runProgram(int selection, string platform, string filenames[]);
 void writeAllEmbeddedFiles();
@@ -24,9 +24,9 @@ int main() {
     int selection;
 
     char remoteOrLocal;
-
-    clearscreen();
     getPlatformSpecificPaths(platform, username, SCP);
+    clearscreen(platform);
+    
 
     cout << "-----------------------------------\n";
     cout << "Welcome to the Ansible Setup Tool\n";
@@ -38,7 +38,7 @@ int main() {
     cout << "(R)emote or (L)ocal? : ";
     cin >> remoteOrLocal;
 
-    clearscreen();
+    clearscreen(platform);
 
     if (remoteOrLocal == 'L' || remoteOrLocal == 'l') {
 
@@ -91,8 +91,12 @@ int main() {
 
     return 0;
 }
-void clearscreen() {
-    std::cout << "\033[2J\033[H"; // Clears screen and moves cursor to top-left
+void clearscreen(string platform) {
+    if (platform == "Win") {
+        system("cls"); // Windows
+    } else {
+        system("clear"); // Mac and Linux
+    }
 }
 
 
@@ -139,7 +143,7 @@ void getPlatformSpecificPaths(string& platform, string& username, string& SCP) {
 
 
 int runProgram(int selection, string platform, string filenames[]) {
-    clearscreen();
+    clearscreen(platform);
     string command;
     string filename = filenames[selection - 1]; // Get the selected filename
     string extension;
@@ -174,7 +178,7 @@ int runProgram(int selection, string platform, string filenames[]) {
     cin.ignore();
 
     // Clear the screen again
-    clearscreen();
+    clearscreen(platform);
     return 0;
 
 };
