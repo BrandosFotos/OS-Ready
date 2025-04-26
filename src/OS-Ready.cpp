@@ -47,7 +47,7 @@ int main() {
             cout << "------------------------[ LOCAL " << platform << "]------------------------\n\n";
             cout << "Available playbooks:\n";
 
-            string path = "./" + platform; // Change this to your actual directory
+            string path = platform; // Change this to your actual directory
 
 
             int j = 0;
@@ -94,25 +94,50 @@ int main() {
 void clearscreen() {
     std::cout << "\033[2J\033[H"; // Clears screen and moves cursor to top-left
 }
-void getPlatformSpecificPaths(string& platform, string& username,string& SCP) {
 
-    
+
+void getPlatformSpecificPaths(string& platform, string& username, string& SCP) {
     #ifdef _WIN32
-    platform = "Win";
-    username = getenv("USERNAME");
-    SCP = "scp.exe";
-
-    #elif __APPLE__
-    platform = "Mac";
-    username = getenv("USER");
-    SCP = "scp";
-
-    #elif __linux__
-    platform = "Linux";
-    username = getenv("USER");
-    SCP = "scp";
+        char* user = getenv("USERNAME");
+    #else
+        char* user = getenv("USER");
     #endif
+
+    if (user) {
+        username = user;
+    } else {
+        username = "unknown";
+    }
+
+    // Detect platform using uname
+    string result;
+    FILE* pipe = popen("uname", "r");
+    if (!pipe) {
+        platform = "Unknown";
+        SCP = "scp";
+        return;
+    }
+
+    char buffer[128];
+    while (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
+        result += buffer;
+    }
+    pclose(pipe);
+
+    // Normalize the result
+    if (result.find("Darwin") != string::npos) {
+        platform = "Mac";
+        SCP = "scp";
+    } else if (result.find("Linux") != string::npos) {
+        platform = "Linux";
+        SCP = "scp";
+    } else {
+        platform = "Win";
+        SCP = "scp.exe";
+    }
 }
+
+
 int runProgram(int selection, string platform, string filenames[]) {
     clearscreen();
     string command;
