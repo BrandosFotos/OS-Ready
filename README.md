@@ -2,23 +2,24 @@
 
 ## Overview
 
-**OS-Ready** is a lightweight command-line utility designed to automate fresh installations and system configuration across **Windows**, **macOS**, and **Linux** using **Ansible**. It streamlines the setup process for developers, sysadmins, and power users—handling SSH setup, Ansible installastion, inventory management, and execution of tailored playbooks.
+**OS-Ready** is a lightweight command-line utility designed to automate fresh installations and system configuration across **Windows**, **macOS**, and **Linux** using **Ansible** and **Chocolatey**. It streamlines the setup process for developers, sysadmins, and power users—handling SSH setup, Ansible installastion, inventory management, and execution of tailored playbooks.
 
 ## ✨ Features
 
-- ✅ Install **Ansible** on the host system  
-- 🔐 Generate and transfer **SSH keys** for secure remote access  
-- 🌐 Connect and configure **remote hosts** over SSH  
-- 📋 Automatically manage your `inventory.ini` for Ansible  
+- ✅ Install **Ansible** on the host system
+- ✅ Install **Chocolatey** on Windows 
 - ▶️ Run playbooks to install apps, apply configurations, and more  
 
 ## 📦 Upcoming Playbooks
 
 Planned system automation scripts will include:
-- 🪟 Windows setup via **Chocolatey**
 - 🍎 macOS configuration using **Homebrew**
 - 🐧 Linux provisioning using native package managers  
 - ⚙️ Common developer tools and environments (Docker, VSCode, Git, etc.)
+- 🔐 Generate and transfer **SSH keys** for secure remote access
+- 🪟 Copy Feature for Games, Programs, Misc. Files
+- 🌐 Connect and configure **remote hosts** over SSH
+- 📋 Automatically manage your `inventory.ini` for Ansible  
 
 ## 🚀 Getting Started
 
