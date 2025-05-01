@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf build-windows
+rm -rf build
 ## Create build directories if they don't already exist
 mkdir build-windows
 mkdir build

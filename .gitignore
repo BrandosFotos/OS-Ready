@@ -12,4 +12,3 @@ OS-Ready.exe
 CMakeLists.txt
 /build
 /build-windows
-cleanbuild.sh
