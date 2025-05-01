@@ -47,7 +47,9 @@ int main() {
             cout << "------------------------[ LOCAL " << platform << "]------------------------\n\n";
             cout << "Available playbooks:\n";
 
+
             string path = platform; // Change this to your actual directory
+
 
 
             int j = 0;
@@ -77,8 +79,6 @@ int main() {
 
             
         } while (selection != 0);
-
-
 
 
     } else if (remoteOrLocal == 'R' || remoteOrLocal == 'r') {
