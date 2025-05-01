@@ -56,8 +56,11 @@ int main() {
             try {
                 for (const auto& entry : fs::directory_iterator(path)) {
                     if (entry.is_regular_file()) {
-                        filenames[j] = entry.path().filename().string();
-                        j ++;
+                        string ext = entry.path().extension().string();
+                        if (ext == ".yaml" || ext == ".yml" || ext == ".sh" || ext == ".ps1") {
+                            filenames[j] = entry.path().filename().string();
+                            j++;
+                        }
                     }
                 }
             } catch (const fs::filesystem_error& e) {
